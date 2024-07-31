@@ -1,0 +1,130 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model AdminMessage {
+  content   String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  title     String?
+  updatedAt DateTime @updatedAt
+}
+
+model Verification {
+  approved  Boolean?
+  comment   String?
+  createdAt DateTime @default(now())
+  filePath  String?
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+  userId    Int?
+}
+
+model ReferralLink {
+  createdAt    DateTime @default(now())
+  id           String   @id @default(cuid())
+  link         String?
+  referralLink String?
+  referrerId   Int?
+  updatedAt    DateTime @updatedAt
+  userId       Int?
+}
+
+model User {
+  createdAt     DateTime @default(now())
+  email         String?  @unique
+  firstName     String?
+  id            String   @id @default(cuid())
+  lastName      String?
+  password      String
+  referralLink  String?
+  roles         Json
+  shared        Int?
+  step          Int?
+  updatedAt     DateTime @updatedAt
+  username      String   @unique
+  verifications Int?
+}
+
+model Session {
+  createdAt  DateTime  @default(now())
+  expiration DateTime?
+  id         String    @id @default(cuid())
+  token      String?
+  updatedAt  DateTime  @updatedAt
+}
+
+model Group {
+  createdAt   DateTime @default(now())
+  description String?
+  id          String   @id @default(cuid())
+  name        String?
+  updatedAt   DateTime @updatedAt
+}
+
+model ReferralUse {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model MessageTemplate {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Payment {
+  amount        Float?
+  createdAt     DateTime @default(now())
+  currency      String?
+  id            String   @id @default(cuid())
+  paymentMethod String?
+  updatedAt     DateTime @updatedAt
+}
+
+model Notification {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+  userId    Int?
+}
+
+model UserVerification {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model AdminLog {
+  action    String?
+  createdAt DateTime @default(now())
+  details   String?
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model UserReferral {
+  createdAt    DateTime @default(now())
+  id           String   @id @default(cuid())
+  referralUser String?
+  referredUser String?
+  updatedAt    DateTime @updatedAt
+}
+
+model CardRequest {
+  createdAt DateTime               @default(now())
+  id        String                 @id @default(cuid())
+  status    EnumCardRequestStatus?
+  updatedAt DateTime               @updatedAt
+  userId    Int?
+}
+
+enum EnumCardRequestStatus {
+  Option1
+}
